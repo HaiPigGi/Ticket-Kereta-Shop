@@ -7,6 +7,7 @@ from tkinter import ttk
 from mysql.connector import Error
 import pandas as pd
 
+
 # Establish the database connection
 db = mysql.connector.connect(
     host="localhost",  # Replace with your MySQL host
@@ -17,6 +18,28 @@ db = mysql.connector.connect(
 
 # Create a cursor object to interact with the database
 cursor = db.cursor()
+
+def create_database():
+    # Establish the database connection
+    db = mysql.connector.connect(
+        host="localhost",  # Replace with your MySQL host
+        user="root",  # Replace with your MySQL username
+        password=""  # Replace with your MySQL password
+    )
+
+    # Create a cursor object to interact with the database
+    cursor = db.cursor()
+
+    # Define the SQL statement to create the database if it does not exist
+    create_database_query = "CREATE DATABASE IF NOT EXISTS ticket_shop"
+
+    # Execute the SQL statement to create the database
+    cursor.execute(create_database_query)
+
+    # Close the cursor and database connection
+    cursor.close()
+    db.close()
+
 
 def create_user_table():
     # Define the SQL statement to create the "user" table
@@ -63,29 +86,38 @@ class Login:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title("Ticket Shop")
-        self.window.geometry("1280x720")  # Set the window size to 1280x720
+        self.window.geometry("1280x768")  # Set the window size to 1280x720
         self.window.configure(bg="#9179A3")
 
         self.create_widgets()
 
     def create_widgets(self):
+        # Create and configure the title label
+        self.title_label = tk.Label(self.window, text="Login", font=("Arial", 24, "bold"), bg="#9179A3", fg="white")
+        self.title_label.pack(pady=20)
+
+        # Create and configure the image label
+        self.image = tk.PhotoImage(file="Kereta.png")  # Replace "Kereta.png" with your own image file
+        self.image_label = tk.Label(self.window, image=self.image, bg="#9179A3")
+        self.image_label.pack()
+
         # Create and configure the email label and entry field
-        self.email_label = tk.Label(self.window, text="Email:")
+        self.email_label = tk.Label(self.window, text="Email:", bg="#9179A3", fg="white")
         self.email_label.pack()
 
-        self.email_entry = tk.Entry(self.window)
+        self.email_entry = tk.Entry(self.window, font=("Arial", 12), bg="white")
         self.email_entry.pack()
 
         # Create and configure the password label and entry field
-        self.password_label = tk.Label(self.window, text="Password:")
+        self.password_label = tk.Label(self.window, text="Password:", bg="#9179A3", fg="white")
         self.password_label.pack()
 
-        self.password_entry = tk.Entry(self.window, show="*")
+        self.password_entry = tk.Entry(self.window, show="*", font=("Arial", 12), bg="white")
         self.password_entry.pack()
 
         # Create the login button
         self.login_button = tk.Button(self.window, text="Login", command=self.login)
-        self.login_button.pack()
+        self.login_button.pack(pady=10)
 
         # Create the register button
         self.register_button = tk.Button(self.window, text="Register", command=self.open_registration)
@@ -136,53 +168,61 @@ class Registration:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title("Registration")
-        self.window.geometry("1280x720")  # Set the window size to 1280x720
+        self.window.geometry("1280x900")  # Set the window size to 1280x720
         self.window.configure(bg="#9179A3")
 
         self.create_widgets()
 
     def create_widgets(self):
-        # Create and configure the name label and entry field
-        self.name_label = tk.Label(self.window, text="Name:")
+         # Create and configure the title label
+        self.title_label = tk.Label(self.window, text="Register", font=("Arial", 24, "bold"), bg="#9179A3", fg="white")
+        self.title_label.pack(pady=20)
+
+        # Create and configure the image label
+        self.image = tk.PhotoImage(file="Kereta.png")  # Replace "Kereta.png" with your own image file
+        self.image_label = tk.Label(self.window, image=self.image, bg="#9179A3")
+        self.image_label.pack()
+          # Create and configure the name label and entry field
+        self.name_label = tk.Label(self.window, text="Name:", font=("Arial", 12), bg="#9179A3", fg="white")
         self.name_label.pack()
 
-        self.name_entry = tk.Entry(self.window)
+        self.name_entry = tk.Entry(self.window, font=("Arial", 12))
         self.name_entry.pack()
 
         # Create and configure the email label and entry field
-        self.email_label = tk.Label(self.window, text="Email:")
+        self.email_label = tk.Label(self.window, text="Email:", font=("Arial", 12), bg="#9179A3", fg="white")
         self.email_label.pack()
 
-        self.email_entry = tk.Entry(self.window)
+        self.email_entry = tk.Entry(self.window, font=("Arial", 12))
         self.email_entry.pack()
 
         # Create and configure the phone number label and entry field
-        self.phone_label = tk.Label(self.window, text="Phone Number:")
+        self.phone_label = tk.Label(self.window, text="Phone Number:", font=("Arial", 12), bg="#9179A3", fg="white")
         self.phone_label.pack()
 
-        self.phone_entry = tk.Entry(self.window)
+        self.phone_entry = tk.Entry(self.window, font=("Arial", 12))
         self.phone_entry.pack()
 
         # Create and configure the password label and entry field
-        self.password_label = tk.Label(self.window, text="Password:")
+        self.password_label = tk.Label(self.window, text="Password:", font=("Arial", 12), bg="#9179A3", fg="white")
         self.password_label.pack()
 
-        self.password_entry = tk.Entry(self.window, show="*")
+        self.password_entry = tk.Entry(self.window, show="*", font=("Arial", 12))
         self.password_entry.pack()
 
         # Create and configure the confirm password label and entry field
-        self.confirm_password_label = tk.Label(self.window, text="Confirm Password:")
+        self.confirm_password_label = tk.Label(self.window, text="Confirm Password:", font=("Arial", 12), bg="#9179A3", fg="white")
         self.confirm_password_label.pack()
 
-        self.confirm_password_entry = tk.Entry(self.window, show="*")
+        self.confirm_password_entry = tk.Entry(self.window, show="*", font=("Arial", 12))
         self.confirm_password_entry.pack()
 
         # Create the register button
-        self.register_button = tk.Button(self.window, text="Register", command=self.register)
-        self.register_button.pack()
+        self.register_button = tk.Button(self.window, text="Register", command=self.register, font=("Arial", 12))
+        self.register_button.pack(pady=10)
 
         # Create the back button to return to the login window
-        self.back_button = tk.Button(self.window, text="Back", command=self.back_to_login)
+        self.back_button = tk.Button(self.window, text="Back", command=self.back_to_login, font=("Arial", 12))
         self.back_button.pack()
 
     def register(self):
@@ -244,13 +284,49 @@ class Home:
         self.create_widgets()
 
     def create_widgets(self):
-        # Create the "Input Data" button on the left side
-        self.input_button = tk.Button(self.window, text="Input Data", command=self.input_data)
-        self.input_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
+        # Create and configure the title label
+        self.title_label = tk.Label(
+            self.window,
+            text="Welcome To Ticket Shop",
+            font=("Arial", 24, "bold"),
+            bg="#9179A3",
+            fg="white"
+        )
+        self.title_label.pack(pady=20)
 
-        # Create the "Keluar Program" button on the right side
-        self.exit_button = tk.Button(self.window, text="Keluar Program", command=self.exit_program)
-        self.exit_button.place(relx=0.8, rely=0.5, anchor=tk.CENTER)
+        # Create and configure the image label
+        self.image = tk.PhotoImage(file="Kereta.png")  # Replace "Kereta.png" with your own image file
+        self.image_label = tk.Label(self.window, image=self.image, bg="#9179A3")
+        self.image_label.pack()
+
+        # Create a placeholder label for spacing
+        self.placeholder_label = tk.Label(self.window, bg="#9179A3")
+        self.placeholder_label.pack(pady=50)
+
+        # Create the "Input Data" button
+        self.input_button = tk.Button(
+            self.window,
+            text="Input Data",
+            command=self.input_data,
+            font=("Arial", 14, "bold"),
+            bg="#4CAF50",
+            fg="white",
+            width=15
+        )
+        self.input_button.place(relx=0.3, rely=0.9, anchor=tk.CENTER)
+
+        # Create the "Keluar Program" button
+        self.exit_button = tk.Button(
+            self.window,
+            text="Keluar Program",
+            command=self.exit_program,
+            font=("Arial", 14, "bold"),
+            bg="#F44336",
+            fg="white",
+            width=15
+        )
+        self.exit_button.place(relx=0.7, rely=0.9, anchor=tk.CENTER)
+
 
     def input_data(self):
         # Display a message box when the "Input Data" button is clicked
@@ -262,6 +338,7 @@ class Home:
 
     def run(self):
         self.window.mainloop()
+
 
 class Ticket:
     def __init__(self, harga):
@@ -304,22 +381,41 @@ class TiketDewasa(Ticket):
 class InputData:
     def __init__(self):
         self.window = tk.Tk()
-        self.window.geometry("800x600")
+        self.window.geometry("400x1280")
         self.window.configure(bg="#9179A3")
 
+        self.canvas = tk.Canvas(self.window, bg="#9179A3")
+        self.scrollbar = tk.Scrollbar(self.window, orient="vertical", command=self.canvas.yview)
+        self.scrollable_frame = tk.Frame(self.canvas, bg="#9179A3")
+
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        )
+
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        self.canvas.pack(side="left", fill="both", expand=True)
+        self.scrollbar.pack(side="right", fill="y")
+
         self.jumlah_label = tk.Label(
-            self.window,
+            self.scrollable_frame,
             text="Jumlah Penumpang:",
             font=("Mina Regular", 12),
             bg="#9179A3",
             fg="white"
         )
-        self.jumlah_label.pack()
-        self.jumlah_entry = tk.Entry(self.window)
-        self.jumlah_entry.pack(pady=10)
+        self.jumlah_label.pack(pady=10)
+        self.jumlah_entry = tk.Entry(
+            self.scrollable_frame,
+            font=("Mina Regular", 12),
+            width=30
+        )
+        self.jumlah_entry.pack(pady=5)
 
         self.submit_button = tk.Button(
-            self.window,
+            self.scrollable_frame,
             text="Submit",
             font=("Mina Regular", 12),
             bg="#755A7C",
@@ -331,60 +427,94 @@ class InputData:
         self.passenger_entries = []
         self.data = []  # Array untuk menyimpan data penumpang
 
+        # Get the screen width and height
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
+
+        # Calculate the x and y coordinates to center the window
+        x = int((screen_width / 2) - (800 / 2))
+        y = int((screen_height / 2) - (600 / 2))
+
+        # Set the window position
+        self.window.geometry(f"400x800+{x}+{y}")
+
         self.window.mainloop()
+
 
     def submit_data(self):
         jumlah_penumpang = int(self.jumlah_entry.get())
+
+        # Calculate the desired window height based on the number of passengers
+        window_height = 150 + jumlah_penumpang * 120
+
+        # Update the canvas height
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"), height=window_height)
 
         for i in range(jumlah_penumpang):
             passenger_number = i + 1
 
             nik_label = tk.Label(
-                self.window,
+                self.scrollable_frame,
                 text=f"NIK Penumpang {passenger_number}:",
                 font=("Mina Regular", 12),
                 bg="#9179A3",
                 fg="white"
             )
-            nik_label.pack()
-            nik_entry = tk.Entry(self.window)
+            nik_label.pack(pady=5)
+            nik_entry = tk.Entry(
+                self.scrollable_frame,
+                font=("Mina Regular", 12),
+                width=30
+            )
             nik_entry.pack()
 
             nama_label = tk.Label(
-                self.window,
+                self.scrollable_frame,
                 text=f"Nama Penumpang {passenger_number}:",
                 font=("Mina Regular", 12),
                 bg="#9179A3",
                 fg="white"
             )
-            nama_label.pack()
-            nama_entry = tk.Entry(self.window)
+            nama_label.pack(pady=5)
+            nama_entry = tk.Entry(
+                self.scrollable_frame,
+                font=("Mina Regular", 12),
+                width=30
+            )
             nama_entry.pack()
 
             umur_label = tk.Label(
-                self.window,
+                self.scrollable_frame,
                 text=f"Umur Penumpang {passenger_number}:",
                 font=("Mina Regular", 12),
                 bg="#9179A3",
                 fg="white"
             )
-            umur_label.pack()
-            umur_entry = tk.Entry(self.window)
+            umur_label.pack(pady=5)
+            umur_entry = tk.Entry(
+                self.scrollable_frame,
+                font=("Mina Regular", 12),
+                width=30
+            )
             umur_entry.pack()
 
             nomer_label = tk.Label(
-                self.window,
+                self.scrollable_frame,
                 text=f"Nomer Telpon Penumpang {passenger_number}:",
                 font=("Mina Regular", 12),
                 bg="#9179A3",
                 fg="white"
             )
-            nomer_label.pack()
-            nomer_entry = tk.Entry(self.window)
+            nomer_label.pack(pady=5)
+            nomer_entry = tk.Entry(
+                self.scrollable_frame,
+                font=("Mina Regular", 12),
+                width=30
+            )
             nomer_entry.pack()
 
             spacer_label = tk.Label(
-                self.window,
+                self.scrollable_frame,
                 text="",
                 bg="#9179A3"
             )
@@ -393,7 +523,7 @@ class InputData:
             self.passenger_entries.append((nik_entry, nama_entry, umur_entry, nomer_entry))
 
         submit_button = tk.Button(
-            self.window,
+            self.scrollable_frame,
             text="Submit",
             font=("Mina Regular", 12),
             bg="#755A7C",
@@ -415,7 +545,6 @@ class InputData:
 
         self.window.destroy()
         payment_window = PaymentWindow(self.data)
-
 
 class PaymentWindow:
     def __init__(self, data):
@@ -621,7 +750,9 @@ class PaymentConfirmationWindow:
         self.window.destroy()
 
 
+
 if __name__ == "__main__":
+    create_database() #Membuat sebuah Database jika tidak tersedia
     create_user_table() #Untuk Generate Table User ketika program di jalankan
     create_payment_table() #Untuk Generate Table Payment ketika program dijalankan
     # Create an instance of the Login class
